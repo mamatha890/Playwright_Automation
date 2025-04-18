@@ -24,8 +24,9 @@ await page.waitForTimeout(1800);
   // Locate the first row in the table
 // Locate the first row
 //await page.locator('//i[@title="Dev-430"]/ancestor::td/following-sibling::td//i[@title="Download"]/following-sibling::i[@title="Remove"]/ancestor::div/preceding-sibling::button').click();
-const rows = await page.locator('//i[@title="Dev-430"]/ancestor::tr').all();
-console.log(rows);
+await page.locator('//table').waitFor({ state: 'visible' });
+const rows = await page.locator('//i[@title="Dev001"]/ancestor::tr').all();
+console.log("rows:",rows);
 
 // Iterate through each row and perform actions
 for (const row of rows) {

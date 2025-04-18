@@ -34,7 +34,7 @@ test.beforeEach(async ({ context, page }) => {
    await page.waitForSelector('.ng-option');
    
   // Step 3: Click on the option with text "Auditor"
- await page.locator('.ng-option', { hasText: 'Auditor' }).click();
+ await page.locator("//span[normalize-space()='temp1']").click();
    // // Click the element
   // Click on the dropdown
     await page.locator('#userPref.ng-select-container').click();
