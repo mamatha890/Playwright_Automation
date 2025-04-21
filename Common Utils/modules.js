@@ -1,7 +1,13 @@
+
+//const { test, expect, context } = require('@playwright/test');
+import fs from "fs";
 class Modules{
-    constructor(page) {
+    constructor(page,context) {
       this.page = page;
+      this.context=context;
       this.filed=("//div[@title='Ideabytes']");
+  
+
     }
     
     async menu(title) {
@@ -31,6 +37,21 @@ class Modules{
     if (dailog.isVisible()) {
         console.log('visible');
   }
+}
+async sessionstorage(){
+
+      // Load authentication state (cookies + localStorage)
+      const sessionStorage = JSON.parse(fs.readFileSync('playwright/.auth/session.json', 'utf-8'));
+      await this.context.addInitScript(storage => {
+          // if (window.location.hostname === 'qa_env.ibiot.net') {
+          for (const [key, value] of Object.entries(storage))
+              window.sessionStorage.setItem(key, value);
+          // }
+      }, sessionStorage);
+  
+      await this.page.goto(process.env.HOME_URL);
+
+  
 }
 }
 

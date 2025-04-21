@@ -1,10 +1,12 @@
+const { extractDataFromExcel } = require('../Utils/Excel.js');
 class RulePage {
-    constructor(page) {
+    constructor(page,expect) {
         this.page = page;
+        this.expect=expect;
 
         // Locators
-        this.dialog = page.locator("//span[text()='New Rule']/ancestor::div[@class='ui-modal']");
-        this.locationDropdown = page.locator("//span[text()='Location']//following-sibling::ng-select");
+       // this.dialog = this.page.locator("//span[text()='New Rule']/ancestor::div[@class='ui-modal']");
+        this.locationDropdown = this.page.locator("//span[text()='Location']//following-sibling::ng-select");
       
 
         // Temperature Row Locators
@@ -18,9 +20,9 @@ class RulePage {
         this.humidityApplyButton = this.humidityRow.locator('input[type="button"][value="Apply"]');
     }
 
-    async isDialogVisible() {
-        return await this.dialog.isVisible();
-    }
+    // async isDialogVisible() {
+    //     return await this.dialog.isVisible();
+    // }
 
     async selectLocation(locationName) {
         await this.locationDropdown.click();
@@ -53,41 +55,38 @@ await this.page.locator(`//span[@title=" ${devicename}" and @class="text-wrapper
         await applyButton.click();
     }
 
-async Alertverification(){
-     await this.page.locator('//span[starts-with(text(), "Alert - Dev001 | Temperature |")]').first().click();
-     
+async Alertclick(){
+    await this.page.locator('//span[starts-with(text(), "Alert - Dev001 | Temperature |")]//parent::div[@class="IjzWp XG5Jd gy2aJ Ejrkd lME98"]').first().click();
+}
+    
+    async AlertVerification(){
        const sensorValue = await this.page.locator('//td[normalize-space()="Temperature"]').textContent();
        console.log('Sensor Value:', sensorValue);
     
        // Verify that Sensor is "Temperature"
-       await expect(sensorValue).toBe('Temperature');
+       await this.expect(sensorValue).toBe('Temperature');
        const statusValue = await this.page.locator('//td[normalize-space()="Good"]').textContent();
        console.log('Status Value:', statusValue);
     
-       // Verify that Sensor is "Temperature"
-       await expect(statusValue).toBe('Good');
-    
-       //await page.waitForTimeout(50000);
+       await this.expect(statusValue).toBe('Good');
        
        await this.page.locator('//span[starts-with(text(), "Alert - Dev001 | Humidity |")]').first().click();
-       //await page.goBack();
-      // await page.locator('//span[@title="IoT_Alarm@ideabytesiot.com"]').nth(1).click();
+       
       const HumidityValue = await this.page.locator('//td[normalize-space()="Humidity"]').textContent();
       console.log('Sensor Value:', HumidityValue);
     
-      // Verify that Sensor is "Temperature"
-      await expect(HumidityValue).toBe('Humidity');
+      await this.expect(HumidityValue).toBe('Humidity');
       const HimiditystatusValue = await this.page.locator('//td[normalize-space()="Good"]').textContent();
       console.log('Status Value:', HimiditystatusValue);
-    
-      // Verify that Sensor is "Temperature"
-      await expect(statusValue).toBe('Good');
+
+      await this.expect(statusValue).toBe('Good');
+    }
     
     
 
     
 
 }
-}
+
 
 module.exports=RulePage;

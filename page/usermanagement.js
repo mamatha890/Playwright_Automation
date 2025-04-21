@@ -1,3 +1,4 @@
+const { expect } = require('@playwright/test');
 class UserPage {
     constructor(page) {
         this.page = page;
@@ -15,21 +16,20 @@ class UserPage {
     async checkboxes(parameter) {
         await this.page.locator(`//input[@id="${parameter}"]`).check();
     }
-    async outlook1(submitbutton) {
-        await this.page.locator(`//input[@type="${submitbutton}"]`).click();
+    async outlook(){
+        await this.page.goto(process.env.TESTURL);
     }
     async outlookVeification() {
-        await this.page.goto(process.env.TESTURL); // Navigate to the test URL
+  
+   
+     // Navigate to the test URL
 
-        // Initialize the UserPage class
-
-        // Fill the email input field
+       
         await this.page.locator('//input[@type="email"]').fill(process.env.TESTEMAIL);
 
-        // Click submit
         await this.page.locator('//input[@type="submit"]').click();
 
-        // Fill the password input field
+     
         await this.page.locator('//input[@type="password"]').fill(process.env.TESTPASSWORD);
         await this.page.locator('//input[@type="submit"]').click();
         await this.page.locator('//input[@type="submit"]').click();
@@ -40,18 +40,12 @@ class UserPage {
 
         async EmailVerificationPage(){
             await this.page.locator('span[title="IoT_Signup@ideabytesiot.com"]').first().click();
-            // await page.waitForTimeout(2000); // Optional: consider replacing with proper wait for element
-            // page.locator("//a[normalize-space()='Click here to Verify Your Email']").click();
+
             await this.page.waitForSelector('//a[normalize-space()="Click here to Verify Your Email"]');
-            await this.page.waitForTimeout(5000); // Wait for the page to load fully
-    
-            // Locate the email verification link
+           
             const emailVerificationLink = this.page.locator("//a[normalize-space()='Click here to Verify Your Email']");
     
-            // Scroll the link into view
-    
-    
-            // Click the link
+           
             await emailVerificationLink.click();
 
 

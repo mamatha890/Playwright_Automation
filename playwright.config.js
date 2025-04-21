@@ -12,7 +12,7 @@ export default defineConfig({
     
    projects: [
     {
-      name: 'chromium',
+      name: 'firefox',
     }    
   ],
 testMatch: ['tests/*spec.js'],
@@ -24,36 +24,19 @@ testMatch: ['tests/*spec.js'],
     ['html', { outputFolder: 'report/html-report', open: 'never' }], // HTML reports in the report folder
  // JSON report
   ],
+  timeout: 100000, // 60
   use: {
+    firefoxUserPrefs: {
+      'pdfjs.disabled': true, // Disable the built-in PDF viewer
+    },
     
     screenshot: 'only-on-failure', // Capture screenshots only for failed tests
     video: 'retain-on-failure',
     trace:'on',
-    browserName: 'chromium', // Set the browser to Chromium
+    browserName: 'firefox', // Set the browser to Chromium
     headless: false, // Set to false to see the browser actions
-    launchOptions: {
-      args: [
-        '--no-sandbox', // Disable sandbox
-        '--disable-setuid-sandbox', // Disable setuid sandbox
-        '--disable-extensions', // Disable extensions
-        '--disable-gpu' // Disable GPU acceleration
-    ]
-   
-    },
-   
-    launchOptions: {
-     // Disable PDF viewer
-    },
-    headless: false,
-    projects: [
-      {
-        name: 'chromium',
-        use: { browserName: 'chromium' },
-      },
-    ], // Optional: Set to true for headless mode
-
   
-  }
+}
   
 
 });
