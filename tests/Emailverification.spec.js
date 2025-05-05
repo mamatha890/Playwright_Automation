@@ -9,6 +9,7 @@ test.beforeEach(async ({ context, page }) => {
     await session.sessionstorage(); 
 });
 test("Creating User", async ({ page }) => {
+
     const role = new Modules(page);
     await role.menu("User Management");
     await role.common("User");
@@ -37,7 +38,7 @@ test("Creating User", async ({ page }) => {
     }
     await locator.submitbutton();
     await locator.outlookVeification();
-    await locator.EmailVerificationPage();
-    await locator.getVerificationLink();
+    await locator.userEmailVerificationPage();
+    await locator.VerificationLink();
 },{ timeout: 80000 });
 

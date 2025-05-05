@@ -52,6 +52,9 @@ class AlarmSetupPage {
 
     await this.submitButton.click();
   }
+  async search(){
+    await this.page.locator('//input[@placeholder="Search..."]').fill("Dev001");
+  }
 }
 
 module.exports = AlarmSetupPage;

@@ -21,6 +21,7 @@ class Modules{
     async common(button){
       await this.page.locator(`//span[normalize-space()='${button}']`).click();
     }
+    
    // async CreateRole(getRoles, Names){
      // await this.page.locator(`//input[@name="${getRoles}"]`).fill(`${Names}`);
      async CreateRole(roles) {

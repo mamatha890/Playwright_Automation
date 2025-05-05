@@ -65,10 +65,10 @@ async Alertclick(){
     
        // Verify that Sensor is "Temperature"
        await this.expect(sensorValue).toBe('Temperature');
-       const statusValue = await this.page.locator('//td[normalize-space()="Good"]').textContent();
+       const statusValue = await this.page.locator('//td[normalize-space()="Warning"]').textContent();
        console.log('Status Value:', statusValue);
     
-       await this.expect(statusValue).toBe('Good');
+       await this.expect(statusValue).toBe('Warning');
        
        await this.page.locator('//span[starts-with(text(), "Alert - Dev001 | Humidity |")]').first().click();
        
@@ -76,17 +76,41 @@ async Alertclick(){
       console.log('Sensor Value:', HumidityValue);
     
       await this.expect(HumidityValue).toBe('Humidity');
-      const HimiditystatusValue = await this.page.locator('//td[normalize-space()="Good"]').textContent();
+      const HimiditystatusValue = await this.page.locator('//td[normalize-space()="Warning"]').textContent();
       console.log('Status Value:', HimiditystatusValue);
 
-      await this.expect(statusValue).toBe('Good');
+      await this.expect(statusValue).toBe('Warning');
+    }
+    async CriticalAlertverification(){
+        const sensorValue = await this.page.locator('//td[normalize-space()="Temperature"]').textContent();
+        console.log('Sensor Value:', sensorValue);
+     
+        // Verify that Sensor is "Temperature"
+        await this.expect(sensorValue).toBe('Temperature');
+        const statusValue = await this.page.locator('//td[normalize-space()="Critical"]').textContent();
+        console.log('Status Value:', statusValue);
+     
+        await this.expect(statusValue).toBe('Critical');
+        
+        await this.page.locator('//span[starts-with(text(), "Alert - Dev001 | Humidity |")]').first().click();
+        
+       const HumidityValue = await this.page.locator('//td[normalize-space()="Critical"]').textContent();
+       console.log('Sensor Value:', HumidityValue);
+     
+       await this.expect(HumidityValue).toBe('Humidity');
+       const HumiditystatusValue = await this.page.locator('//td[normalize-space()="Critical"]').textContent();
+       console.log('Status Value:', HumiditystatusValue);
+ 
+       await this.expect(HumiditystatusValue).toBe('Critical');
+     }
+
     }
     
     
 
     
 
-}
+
 
 
 module.exports=RulePage;

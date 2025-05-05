@@ -1,17 +1,18 @@
-//const { request } = require('@playwright/test');
+const { request } = require('@playwright/test');
 class UserApi {
     constructor(request,expect) {
         this.request = request;
         this.expect=expect // Store the request object
     }
+   
 
-    async createUser(user) {
+    async createUser(data) {
         const response = await this.request.post(process.env.CREATEAPI, {
             data: {
-                deviceId: user.deviceId,
-                tms: user.tms,
-                temp: user.temp,
-                humidity: user.humidity,
+                deviceId:data.deviceId,
+                tms:"",
+                temp:data.temp,
+                hum:data.hum,
             },
             headers: {
                 Accept: 'application/json',
