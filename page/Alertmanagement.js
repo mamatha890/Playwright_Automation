@@ -2,7 +2,7 @@ const fs = require("fs");
 const path = require('path');
 const pdfParse = require('pdf-parse');
 const Modules = require('../Common Utils/modules.js');
-const UserPage = require('../page/UserManagement.js');
+const UserPage = require('./UserManagementmodule.js');
 const Loginpage = require('../page/Loginpage.js');
 const RulePage = require('../page/Alert verification.js');
 const xlsx = require('xlsx');
@@ -87,7 +87,9 @@ class Alertmanagent {
 
             // Retrieve the filename and save the file
             const fileName = await download.suggestedFilename();
-            const downloadDir = path.resolve(__dirname, 'Trend');
+            const downloadDir = path.resolve(__dirname,'../exported_files','Trend123');
+
+            console.log(downloadDir);
 
             // Ensure the download directory exists
             if (!fs.existsSync(downloadDir)) {
@@ -142,7 +144,7 @@ class Alertmanagent {
 
             // Retrieve the filename and save the file
             const fileName = await download.suggestedFilename();
-            const downloadDir = path.resolve(__dirname, 'AlertPdf');
+            const downloadDir = path.resolve(__dirname, '../exported_files','Trend123');
             console.log(downloadDir);
 
             // Ensure the download directory exists

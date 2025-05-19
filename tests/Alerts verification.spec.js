@@ -4,7 +4,7 @@ import fs from "fs";
 const RulePage = require('../page/Alert verification.js');
 const { extractDataFromExcel } = require('../Utils/Excel.js');
 
-const UserPage = require('../page/UserManagement.js')
+const UserPage = require('../page/UserManagementmodule.js')
 
 const UserApi = require('../page/Api.js');
 test.beforeEach(async ({ context, page }) => {

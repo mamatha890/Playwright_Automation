@@ -14,11 +14,11 @@ test('Save Session Storage for Persistent Login', async ({ page }) => {
     await page.getByRole('textbox', { name: 'Enter your username' }).fill(username);
     await page.getByRole('textbox', { name: 'Enter your password' }).fill(password);
     await page.waitForTimeout(1800);
-    await page.click('//span[@class="input-group-text"]//span[contains(@class, "fa-eye")]');
-        const captchaText = await page.textContent('div.captcha-container marquee.marquee-text');
-        const abcd = captchaText.trim();
-      console.log('Captured CAPTCHA Text:', abcd);
-      await page.fill('input[name="capt"]', abcd);
+    // await page.click('//span[@class="input-group-text"]//span[contains(@class, "fa-eye")]');
+    //     const captchaText = await page.textContent('div.captcha-container marquee.marquee-text');
+    //     const abcd = captchaText.trim();
+    //   console.log('Captured CAPTCHA Text:', abcd);
+    //   await page.fill('input[name="capt"]', abcd);
 
     await page.getByRole('button', { name: 'Login' }).click();
 

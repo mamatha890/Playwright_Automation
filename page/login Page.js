@@ -24,14 +24,14 @@ exports.LoginPage = class LoginPage {
       await this.page.getByRole(this.passwordField.role, { name: this.passwordField.name }).fill(password); // Fill the password
       //await this.page.waitForTimeout(1800);
   
-      await this.page.click(this.eyeIcon); // Click the eye icon to reveal the password
+      // await this.page.click(this.eyeIcon); // Click the eye icon to reveal the password
   
-      const captchaText = await this.page.textContent(this.captchaTextSelector); // Capture CAPTCHA text
-      const trimmedCaptcha = captchaText.trim(); // Trim spaces from the captured CAPTCHA
-      console.log('Captured CAPTCHA Text:', trimmedCaptcha);
+      // const captchaText = await this.page.textContent(this.captchaTextSelector); // Capture CAPTCHA text
+      // const trimmedCaptcha = captchaText.trim(); // Trim spaces from the captured CAPTCHA
+      // console.log('Captured CAPTCHA Text:', trimmedCaptcha);
   
-      await this.page.fill(this.captchaInputField, trimmedCaptcha); // Fill the CAPTCHA input field
-      //await this.page.waitForTimeout(1800);
+      // await this.page.fill(this.captchaInputField, trimmedCaptcha); // Fill the CAPTCHA input field
+      // //await this.page.waitForTimeout(1800);
   
       await this.page.getByRole(this.loginButton.role, { name: this.loginButton.name }).click(); // Click the login button
      // await this.page.waitForTimeout(1800); // Wait for animations or redirects
@@ -44,8 +44,8 @@ exports.LoginPage = class LoginPage {
       await this.page.click(this.userManagement);
 
     }
-    async EnterSearch(){
-      await this.page.fill(this.Search, 'mamatha');
+    async EnterSearch(name){
+      await this.page.fill(`this.Search, "${name}"`);
   
     }
    
