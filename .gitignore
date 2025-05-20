@@ -8,3 +8,16 @@ node_modules/
 
 # env
 Env
+
+#Reports files
+report
+Screenshots
+tests-results
+tests/AlertPdf
+tests/downloads
+tests/ReportPDF
+tests/Trend
+tests/Trend Download
+tests/Trend PDF Download
+tests/TrendReports
+

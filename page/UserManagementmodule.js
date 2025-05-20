@@ -1,4 +1,6 @@
 const { expect } = require('@playwright/test');
+const { extractDataFromExcel } = require('../Utils/Excel.js');
+const xlsx = require('xlsx');
 class UserPage {
     constructor(page, expect) {
         this.page = page;
@@ -40,6 +42,7 @@ class UserPage {
 
         this.homescreen = page.locator('//ng-select[@placeholder="Select home Screen"]');
         this.mobilenumber= '//div[contains(text(),"Please enter Phone Number")]'; 
+        this.edit=page.locator('//mat-icon[contains(text(),"edit")]');
 
     }
 
@@ -146,8 +149,9 @@ class UserPage {
         await this.page.fill(this.Search, 'mamatha sangana');
 
     }
-    async edit() {
-        await this.page.locator('//mat-icon[contains(text(),"edit")]').click({ force: true });
+    async edituser() {
+       await this.page.locator('//mat-icon[contains(text(),"edit")]').click({ force: true });
+    
     }
     async logout() {
         await this.page.locator('//div[@class="ui-controlbar"]').click();
@@ -276,6 +280,41 @@ class UserPage {
 
 
 
+    }
+    async userediting(){
+            const nameInputSelector = '//input[@name="name"]';
+            
+            // Clear and update the input field
+            await this.page.locator(nameInputSelector).click(); // Focus on the input field
+            await this.page.keyboard.press('Control+A'); // Select all text (use 'Meta+A' for Mac)
+            await this.page.keyboard.press('Backspace'); // Clear the field
+            
+            // Wait for any potential external update script to finish
+          
+            // Adjust timeout if necessary
+            
+                const excelData = extractDataFromExcel(
+                    'C:/Users/mamatha.sangana/Videos/Playwright_Automation/Common Utils/data.xlsx',
+                    'usermanagement');
+                const exceldata = excelData[0];
+            
+            // Enter the new value
+            
+            await this.page.locator(nameInputSelector).fill(exceldata.FirsttName); 
+            await this.page.waitForTimeout(3000);
+            const nameInputSelector1 = '//input[@name="lastname"]';
+            
+            
+            // Clear and update the input field
+            await this.page.locator(nameInputSelector1).click(); // Focus on the input field
+            await this.page.keyboard.press('Control+A'); // Select all text (use 'Meta+A' for Mac)
+            await this.page.keyboard.press('Backspace'); // Clear the field
+            
+            // Wait for any potential external update script to finish
+            // Adjust timeout if necessary
+            
+            
+            await this.page.locator(nameInputSelector1).fill(exceldata.LastName); 
     }
     async verifyPermissioneditfunctinality(randomRoleName, dashboard) {
         await this.page.locator('//button[@type="button"]/span[contains(text(), "Role")]/parent::button/parent::div/parent::div/div/div/input[@placeholder="Search..."]').fill(randomRoleName);

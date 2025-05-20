@@ -1,11 +1,14 @@
-const { test, expect, context } = require('@playwright/test');
-const { ReportsPage } = require('../page/Reports.js');
-const fs = require('fs');
+const {test} = require('@playwright/test');
 const Modules = require('../Common Utils/modules.js');
 const { extractDataFromExcel } = require('../Utils/Excel.js');
 const UserPage = require('../page/UserManagementmodule.js');
 const UserPage = require('../page/Api.js');
 const xlsx = require('xlsx');
+const ScreenshotHelper = require('../Utils/ScreenshotHelper');
+test.afterEach(async ({ page }, testInfo) => {
+  const screenshotHelper = new ScreenshotHelper(); // Correct initialization
+  await screenshotHelper.captureScreenshot(page, testInfo); // Call the method
+});
 
 test.beforeEach(async ({ context, page }) => {
   const session = new Modules(page, context);
@@ -26,14 +29,10 @@ function updateExcelStatus(filePath, sheetName, data) {
 }
 // Loop through each row of data and create a test
 testdata.forEach((code) => {
-
-
-    if (code.TestCaseName === "roles creation") {
+ if (code.TestCaseName === "roles creation") {
         test(`${code["TestCaseNumber"]} - Roles end to end testcase`, async ({ page }) => {
             try {
-
-
-  const role = new Modules(page);
+     const role = new Modules(page);
   const excelData = extractDataFromExcel(
     'C:/Users/mamatha.sangana/Videos/Playwright_Automation/Common Utils/data.xlsx',
     'usermanagement');

@@ -5,6 +5,11 @@ const { extractDataFromExcel } = require('../Utils/Excel.js');
 const path = require('path');
 const xlsx = require('xlsx');
 const Loginpage = require('../page/Loginpage.js');
+const ScreenshotHelper = require('../Utils/ScreenshotHelper');
+test.afterEach(async ({ page }, testInfo) => {
+  const screenshotHelper = new ScreenshotHelper(); // Correct initialization
+  await screenshotHelper.captureScreenshot(page, testInfo); // Call the method
+});
 test.beforeEach(async ({ context, page }) => {
     const session = new Modules(page, context);
     await session.sessionstorage();
@@ -24,94 +29,94 @@ function updateExcelStatus(filePath, sheetName, data) {
 }
 // Loop through each row of data and create a test
 testdata.forEach((code) => {
-
-
     if (code.TestCaseName === "user creation and deletion  testcase") {
         test(`${code["TestCaseNumber"]} - user creation and deletion  testcases`, async ({ page }) => {
             try {
 
-    const excelData = extractDataFromExcel(
-        'C:/Users/mamatha.sangana/Videos/Playwright_Automation/Common Utils/data.xlsx',
-        'usermanagement');
-    const user = excelData[0];
-    const role = new Modules(page);
-    const locator = new UserPage(page);
-    await page.locator(('//button[@title="User Management"]')).click();
-    await locator.EnterSearch(user.Search);
-    await page.waitForTimeout(5000);
-    const URL = process.env.BASE_URL;
-    const username = process.env.USERNAME1;
-    const userId = process.env.User;
-    console.log("username", username);
-    const password = process.env.PASSWORD;
-    console.log(password);
-    const table = await page.locator('table.mat-mdc-table');
-    const rows = table.locator('tbody tr');
-    const rowCount = await rows.count();
-    console.log("rowcount:",rowCount);
-    if  (await rowCount === 1) {
-        await locator.deleteuser();
-        await locator.loginverification(URL, userId, password);
-        await locator.login(URL, username, password)
+                const excelData = extractDataFromExcel(
+                    'C:/Users/mamatha.sangana/Videos/Playwright_Automation/Common Utils/data.xlsx',
+                    'usermanagement');
+                const user = excelData[0];
+                const role = new Modules(page);
+                const locator = new UserPage(page);
+               role.menu("User Management");
+                await locator.EnterSearch(user.Search);
+                role.menu("User Management");
+                await page.waitForTimeout(5000);
+                const URL = process.env.BASE_URL;
+                const username = process.env.USERNAME1;
+                const userId = process.env.User;
+                console.log("username", username);
+                const password = process.env.PASSWORD;
+                console.log(password);
+                const table = await page.locator('table.mat-mdc-table');
+                const rows = table.locator('tbody tr');
+                const rowCount = await rows.count();
+                console.log("rowcount:", rowCount);
+                if (await rowCount === 1) {
+                    await locator.deleteuser();
+                    await locator.loginverification(URL, userId, password);
+                    await locator.login(URL, username, password)
 
-        await role.menu("User Management");
-        await role.common("User");
-        role.dialog();
-        const fields = [
-            { title: 'name', value: user.FirsttName },
-            { title: 'lastname', value: user.LastName },
-            { title: 'mailId', value: user.EmailId }
-        ];
-        for (const field of fields) {
-            await locator.dynamicLocator(field.title, field.value);
-        }
-        await locator.fillfiled(user);
-        await locator.dynamicLocator('mobileNumber', user.PhoneNumber);
-        await locator.rolepeference(user);
-        await locator.dynamicLocator('password', user.Password);
-        await locator.dynamicLocator('confirmPassword', user.ConfirmPassword);
-        await locator.usercheckboxes();
-        await page.waitForTimeout(3000);
-        await locator.clicksubmitbutton();
-        await page.waitForTimeout(3000);
-        await locator.outlook();
-        await locator.outlookVeification();
-        await locator.userEmailVerificationPage();
-        await locator.VerificationLink();
-        await page.waitForTimeout(3000);
-    }
-  
+                    await role.menu("User Management");
+                    await role.common("User");
+                    role.dialog();
+                    const fields = [
+                        { title: 'name', value: user.FirsttName },
+                        { title: 'lastname', value: user.LastName },
+                        { title: 'mailId', value: user.EmailId }
+                    ];
+                    for (const field of fields) {
+                        await locator.dynamicLocator(field.title, field.value);
+                    }
+                    await locator.fillfiled(user);
+                    await locator.dynamicLocator('mobileNumber', user.PhoneNumber);
+                    await locator.rolepeference(user);
+                    await locator.dynamicLocator('password', user.Password);
+                    await locator.dynamicLocator('confirmPassword', user.ConfirmPassword);
+                    await locator.usercheckboxes();
+                    await page.waitForTimeout(3000);
+                    await locator.clicksubmitbutton();
+                    await page.waitForTimeout(3000);
+                    await locator.outlook();
+                    await locator.outlookVeification();
+                    await locator.userEmailVerificationPage();
+                    await locator.VerificationLink();
+                    await page.waitForTimeout(3000);
+                }
 
-    else {
-        
-        console.log("no data available");
-        await role.common("User");
-        role.dialog();
-        const fields = [
-            { title: 'name', value: user.FirsttName },
-            { title: 'lastname', value: user.LastName },
-            { title: 'mailId', value: user.EmailId }
-        ];
-        for (const field of fields) {
-            await locator.dynamicLocator(field.title, field.value);
-        }
-        await locator.fillfiled(user);
-        await locator.dynamicLocator('mobileNumber', user.PhoneNumber);
-        await locator.rolepeference(user);
-        await locator.dynamicLocator('password', user.Password);
-        await locator.dynamicLocator('confirmPassword', user.ConfirmPassword);
-        await locator.usercheckboxes();
-        await page.waitForTimeout(3000);
-        await locator.clicksubmitbutton();
-        await page.waitForTimeout(3000);
-        await locator.outlook();
-        await locator.outlookVeification();
-        await locator.userEmailVerificationPage();
-        await locator.VerificationLink();
-         code.Status = "Pass";
-    }
-}
-    catch (err) {
+
+                else {
+
+
+                    console.log("no data available");
+                    await role.common("User");
+                    role.dialog();
+                    const fields = [
+                        { title: 'name', value: user.FirsttName },
+                        { title: 'lastname', value: user.LastName },
+                        { title: 'mailId', value: user.EmailId }
+                    ];
+                    for (const field of fields) {
+                        await locator.dynamicLocator(field.title, field.value);
+                    }
+                    await locator.fillfiled(user);
+                    await locator.dynamicLocator('mobileNumber', user.PhoneNumber);
+                    await locator.rolepeference(user);
+                    await locator.dynamicLocator('password', user.Password);
+                    await locator.dynamicLocator('confirmPassword', user.ConfirmPassword);
+                    await locator.usercheckboxes();
+                    await page.waitForTimeout(3000);
+                    await locator.clicksubmitbutton();
+                    await page.waitForTimeout(3000);
+                    await locator.outlook();
+                    await locator.outlookVeification();
+                    await locator.userEmailVerificationPage();
+                    await locator.VerificationLink();
+                    code.Status = "Pass";
+                }
+            }
+            catch (err) {
                 console.error(`Test case ${code["TestCaseNumber"]} failed: ${err.message}`);
                 code.Status = "Fail"; // Mark as failed
                 throw err; // Re-throw to ensure Playwright marks the test as failed
@@ -124,8 +129,8 @@ testdata.forEach((code) => {
 });
 
 
-      
-        
+
+
 
 
 
