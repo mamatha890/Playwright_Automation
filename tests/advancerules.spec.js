@@ -1,21 +1,12 @@
-const { test } = require('@playwright/test');
+const { test ,context} = require('@playwright/test');
 const AlarmSetupPage = require('../page/AlarmSetupPage.js');
+const Modules = require('../Common Utils/modules.js');
 const fs = require('fs');
 
 test.beforeEach(async ({ context, page }) => {
-    // Load authentication state (cookies + localStorage)
-    const sessionStorage = JSON.parse(fs.readFileSync('playwright/.auth/session.json', 'utf-8'));
-    await context.addInitScript(storage => {
-      // if (window.location.hostname === 'qa_env.ibiot.net') {
-        for (const [key, value] of Object.entries(storage))
-          window.sessionStorage.setItem(key, value);
-      // }
-    }, sessionStorage);
-  
-    await page.goto(process.env.HOME_URL);
-  });
-
-
+    const session = new Modules(page, context);
+    await session.sessionstorage();
+});
 test('login',async({page})=>{
     const alarmSetupPage1= new AlarmSetupPage(page);
 

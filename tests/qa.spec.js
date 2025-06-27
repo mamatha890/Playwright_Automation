@@ -1,14 +1,18 @@
 const { test } = require('@playwright/test');
 const fs = require('fs');
-require('dotenv').config();
+
+const { envConfig } = require('../ENV/envConfig/'); 
 
 test('Save Session Storage for Persistent Login', async ({ page }) => {
     const URL = process.env.BASE_URL;
     const username = process.env.USERNAME1;
     const password = process.env.PASSWORD;
     const home_url=process.env.HOME_URL;
+      await page.goto(envConfig.baseURL);
 
-    await page.goto(URL);
+  //  await page.goto(URL);
+
+
 
     // Fill login details
     await page.getByRole('textbox', { name: 'Enter your username' }).fill(username);
@@ -32,27 +36,9 @@ test('Save Session Storage for Persistent Login', async ({ page }) => {
     const sessionStorageData = await page.evaluate(() => JSON.stringify(sessionStorage));
     fs.writeFileSync('playwright/.auth/session.json', sessionStorageData, 'utf-8');
  
-    console.log('✅ Authentication state and sessionStorage saved!',sessionStorageData);
-
-//     setInterval(async () => {
-//       try {
-//         console.log('🔄 Refreshing access token...');
-//         const updatedSessionStorageData  = await page.evaluate(() => JSON.stringify(sessionStorage));
-        
+    console.log('✅Authentication state and sessionStorage saved!',sessionStorageData);
 
 
-//         fs.writeFileSync('playwright/.auth/session.json', updatedSessionStorageData, 'utf-8');
-//       } catch (error) {
-//         console.error('❌ Failed to refresh token:', error);
-//       }
-//     }, 840000);
-  
-//     console.log('✅ Token refresh and session storage updates completed.');
-
-//      // Refresh every 1 second
-//      await page.pause();
-     
-//   });
 });
    
   
