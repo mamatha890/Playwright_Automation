@@ -5,6 +5,24 @@ node_modules/
 /playwright-report/
 /blob-report/
 /playwright/.cache/
+/allure-report
+/allure-results
+/html-report
+/html-report.zip
+
 
 # env
 Env
+
+#Reports files
+report
+Screenshots
+tests-results
+tests/AlertPdf
+tests/downloads
+tests/ReportPDF
+tests/Trend
+tests/Trend Download
+tests/Trend PDF Download
+tests/TrendReports
+
